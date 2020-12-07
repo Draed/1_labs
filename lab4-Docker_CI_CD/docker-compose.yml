@@ -1,0 +1,20 @@
+version: '3'
+services:
+    jenkins:
+        image: jenkins/jenkins
+        ports:
+            - "8080:8080"
+        logging:
+            driver: syslog
+            options:
+                labels: "application"
+                tag: "jenkins|{{.ImageName}}|{{.DaemonName}}"
+        labels:
+            application: "jenkins-master"
+        environment:
+            # set java memory pool to 8Gb
+            - JAVA_OPTS="-Xmx8192m"
+            # set jenkins connection to 300
+            - JENKINS_OPTS=" --handlerCountMax=300
+            # set jenkins logfile 
+            - logfile=/var/log/jenkins/jenkins.log
