@@ -1,0 +1,4 @@
+logging==0.4.9.6
+netfilter==0.6.4
+py-notifier==0.1.1
+scapy==2.4.4
