@@ -302,29 +302,29 @@ REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" /v "DODo
 
 :: Windows Update
 
-NET STOP wuauserv
-SCHTASKS /Change /TN "\Microsoft\Windows\WindowsUpdate\Automatic App Update" /DISABLE
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AutoInstallMinorUpdates" /t REG_DWORD /d 0 /f
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AUOptions" /t REG_DWORD /d %AutoUpdateN% /f
-REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 0 /f
-REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v "AUOptions" /t REG_DWORD /d %AutoUpdateN% /f
-NET START wuauserv
+@REM NET STOP wuauserv
+@REM SCHTASKS /Change /TN "\Microsoft\Windows\WindowsUpdate\Automatic App Update" /DISABLE
+@REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AutoInstallMinorUpdates" /t REG_DWORD /d 0 /f
+@REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "AUOptions" /t REG_DWORD /d %AutoUpdateN% /f
+@REM REG ADD "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 0 /f
+@REM REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v "AUOptions" /t REG_DWORD /d %AutoUpdateN% /f
+@REM NET START wuauserv
 
 :: Disable Reboot after Windows Updates are installed
 
-SCHTASKS /Change /TN "Microsoft\Windows\UpdateOrchestrator\Reboot" /Disable
-ren "%WinDir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator\Reboot" "Reboot.bak"
-md "%WinDir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator\Reboot"
-SCHTASKS /Change /TN "Microsoft\Windows\UpdateOrchestrator\Reboot" /Disable
+@REM SCHTASKS /Change /TN "Microsoft\Windows\UpdateOrchestrator\Reboot" /Disable
+@REM ren "%WinDir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator\Reboot" "Reboot.bak"
+@REM md "%WinDir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator\Reboot"
+@REM SCHTASKS /Change /TN "Microsoft\Windows\UpdateOrchestrator\Reboot" /Disable
 
 ::Disable shares your WiFi network login
 
-REG ADD "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v "value" /t REG_DWORD /d 0 /f
-REG ADD "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" /v "value" /t REG_DWORD /d 0 /f
+@REM REG ADD "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v "value" /t REG_DWORD /d 0 /f
+@REM REG ADD "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" /v "value" /t REG_DWORD /d 0 /f
 
 ::Prevent from creating LNK files in the Recents folder
 
-REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRecentDocsHistory" /t REG_DWORD /d 1 /f
+@REM REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRecentDocsHistory" /t REG_DWORD /d 1 /f
 
 ::Remove the Previous Versions tab in file Properties
 
@@ -374,98 +374,3 @@ powershell -command " get-appxpackage -allusers 'Microsoft.WindowsReadingList' |
 powershell -command " get-appxpackage -allusers 'Microsoft.WorldNationalParks' | remove-appxpackage "
 powershell -command " get-appxpackage -allusers 'Windows.ContactSupport' | remove-appxpackage "
 powershell -command " get-appxpackage -allusers 'Microsoft.Studios.Wordament' | remove-appxpackage "
-
-
-
-:: Removing bad updates
-:: All commands below are from Tron, I take no credit for this and all credit goes to the taltented people behind the Tron script. https://github.com/bmrf/tron
-
-:: KB 2902907 (https://support.microsoft.com/en-us/kb/2902907)
-
-start /wait "" wusa /uninstall /kb:2902907 /norestart /quiet
-
-:: KB 2922324 (https://support.microsoft.com/en-us/kb/2922324)
-
-start /wait "" wusa /uninstall /kb:2922324 /norestart /quiet
-
-:: KB 2952664 (https://support.microsoft.com/en-us/kb/2952664)
-
-start /wait "" wusa /uninstall /kb:2952664 /norestart /quiet
-
-:: KB 2976978 (https://support.microsoft.com/en-us/kb/2976978)
-
-start /wait "" wusa /uninstall /kb:2976978 /norestart /quiet
-
-:: KB 2977759 (https://support.microsoft.com/en-us/kb/2977759)
-
-start /wait "" wusa /uninstall /kb:2977759 /norestart /quiet
-
-:: KB 2990214 (https://support.microsoft.com/en-us/kb/2990214)
-
-start /wait "" wusa /uninstall /kb:2990214 /norestart /quiet
-
-:: KB 3012973 (https://support.microsoft.com/en-us/kb/3012973)
-
-start /wait "" wusa /uninstall /kb:3012973 /norestart /quiet
-
-:: KB 3014460 (https://support.microsoft.com/en-us/kb/3014460)
-
-start /wait "" wusa /uninstall /kb:3014460 /norestart /quiet
-
-:: KB 3015249 (https://support.microsoft.com/en-us/kb/3015249)
-
-start /wait "" wusa /uninstall /kb:3015249 /norestart /quiet
-
-:: KB 3021917 (https://support.microsoft.com/en-us/kb/3021917)
-
-start /wait "" wusa /uninstall /kb:3021917 /norestart /quiet
-
-:: KB 3022345 (https://support.microsoft.com/en-us/kb/3022345)
-
-start /wait "" wusa /uninstall /kb:3022345 /norestart /quiet
-
-:: KB 3035583 (https://support.microsoft.com/en-us/kb/3035583)
-
-start /wait "" wusa /uninstall /kb:3035583 /norestart /quiet
-
-:: KB 3044374 (https://support.microsoft.com/en-us/kb/3044374)
-
-start /wait "" wusa /uninstall /kb:3044374 /norestart /quiet
-
-:: KB 3050265 (https://support.microsoft.com/en-us/kb/3050265)
-
-start /wait "" wusa /uninstall /kb:3050265 /norestart /quiet
-
-:: KB 3050267 (https://support.microsoft.com/en-us/kb/3050267)
-
-start /wait "" wusa /uninstall /kb:3050267 /norestart /quiet
-
-:: KB 3065987 (https://support.microsoft.com/en-us/kb/3065987)
-
-start /wait "" wusa /uninstall /kb:3065987 /norestart /quiet
-
-:: KB 3068708 (https://support.microsoft.com/en-us/kb/3068708)
-
-start /wait "" wusa /uninstall /kb:3068708 /norestart /quiet
-
-:: KB 3075249 (https://support.microsoft.com/en-us/kb/3075249)
-
-start /wait "" wusa /uninstall /kb:3075249 /norestart /quiet
-
-:: KB 3075851 (https://support.microsoft.com/en-us/kb/3075851)
-
-start /wait "" wusa /uninstall /kb:3075851 /norestart /quiet
-
-:: KB 3075853 (https://support.microsoft.com/en-us/kb/3075853)
-
-start /wait "" wusa /uninstall /kb:3075853 /norestart /quiet
-
-:: KB 3080149 (https://support.microsoft.com/en-us/kb/3080149)
-
-start /wait "" wusa /uninstall /kb:3080149 /norestart /quiet
-
-:: Additional KB entries removed by Microsoft; originally associated with telemetry
-
-start /wait "" wusa /uninstall /kb:2976987 /norestart /quiet
-
-start /wait "" wusa /uninstall /kb:3068707 /norestart /quiet

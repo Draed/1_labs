@@ -35,17 +35,20 @@ New-ItemProperty -path 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders
 #Write-Host 'TLS 1.3 has been disabled.'
 
 # default packet manager is chocolate
-Install-PackageProvider chocolatey -Confirm
-Set-PackageSource -Name chocolatey -Trusted
+Install-PackageProvider -Name "chocolatey" -Confirm -Force
+Set-PackageSource -Name "chocolatey" -Trusted
 
 # install firefox
 Install-Package -Name Firefox -ProviderName Chocolatey -Confirm
 
+# install keepass-xc (password manager)
+Install-Package -Name Firefox -ProviderName Chocolatey -Confirm
+
 # install git client
-Install-Package -Name git -ProviderName Chocolatey -Confirm
+#Install-Package -Name git -ProviderName Chocolatey -Confirm
 
 # install vscodium
-Install-Package -Name vscodium -ProviderName Chocolatey -Confirm
+#Install-Package -Name vscodium -ProviderName Chocolatey -Confirm
 
 # install adobe reader 
-Install-Package -Name AdobeReader -ProviderName Chocolatey -Confirm
+#Install-Package -Name AdobeReader -ProviderName Chocolatey -Confirm

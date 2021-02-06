@@ -53,6 +53,3 @@ sp "HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows" "CEIPEnable" 0
 ## ">> SOFTWARE Policies Applied"
 ## "++ Make sure you run disable-services.ps1 & disable-tasks.ps1"
 ## "++ to disable all telemetry & ceip related services & tasks"
-
-
-## second part of telemetry disable (with firewall rules)

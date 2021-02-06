@@ -11,11 +11,11 @@
 
 @ECHO OFF
 
-:: var configuration
-CALL variables.bat
+:: 1-Disable autoupdate,2-ask for download and install, 3-ask for reboot, 4-automatic update
+SETX AutoUpdateN 2
 
-:: configuration
-CALL users.bat
+:: if system on SSD drive - set 0, HDD - 3
+SETX Prefetch 0
 
 :: Registry backup COPY to C:/RegBackup/Backup.reg 
 
@@ -42,10 +42,10 @@ DEL "%RegBackup%\HKCC.reg"
 
 :: Rename Computer
 
-REG ADD HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName /v ComputerName /t REG_SZ /d %MyComputerName% /f
-REG ADD HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName\ /v ComputerName /t REG_SZ /d %MyComputerName% /f
-REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ /v Hostname /t REG_SZ /d %MyComputerName% /f
-REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ /v "NV Hostname" /t REG_SZ /d %MyComputerName% /f
+@REM REG ADD HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName /v ComputerName /t REG_SZ /d %MyComputerName% /f
+@REM REG ADD HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName\ /v ComputerName /t REG_SZ /d %MyComputerName% /f
+@REM REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ /v Hostname /t REG_SZ /d %MyComputerName% /f
+@REM REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\ /v "NV Hostname" /t REG_SZ /d %MyComputerName% /f
 
 :: Change Clock and Date formats 24H, metric (Sign out required to see changes)
 
@@ -55,9 +55,6 @@ REG ADD "HKCU\Control Panel\International" /v "iTime" /t REG_SZ /d "1" /f
 REG ADD "HKCU\Control Panel\International" /v "sShortDate" /t REG_SZ /d "dd.MM.yyyy" /f
 REG ADD "HKCU\Control Panel\International" /v "sShortTime" /t REG_SZ /d "HH:mm" /f
 REG ADD "HKCU\Control Panel\International" /v "sTimeFormat" /t REG_SZ /d "H:mm:ss" /f
-
-:: security_hardening
-powershell.exe -ExecutionPolicy Unrestricted -Command ". '..\powershell_script\security_hardening.ps1'"
 
 :: install packet 
 powershell.exe -ExecutionPolicy Unrestricted -Command ". '..\powershell_script\packet_install.ps1'"
@@ -76,9 +73,6 @@ CALL optimize.bat
 
 :: privacy
 CALL privacy.bat
-
-:: configuration
-CALL config.bat
 
 :: clean
 CALL clean.bat
