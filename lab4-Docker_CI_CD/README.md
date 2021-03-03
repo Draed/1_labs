@@ -1,15 +1,16 @@
 # lab4-Docker_CI-CD
 
 This lab create a CICD infrastructure based on: 
+- git
 - Jenkins
-
-In this lab I do not use a custom image as I will not reuse jenkins as often as the syslog image and because i trust the official jenkins image (wich i base on).
+- Docker registry 
 
 
 # Usage
 
-docker-compose up
+’’’docker-compose up’’’
 
 # sources, ref and documentation 
 
 - https://live-rg-engineering.pantheon.io/news/putting-jenkins-docker-container
+- https://www.kf-interactive.com/blog/roll-your-own-docker-registry-with-docker-compose-supervisor-and-nginx/

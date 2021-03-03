@@ -2,19 +2,43 @@ version: '3'
 services:
     jenkins:
         image: jenkins/jenkins
+        volumes: 
+            - /Users/dreadper/docker_volumes/data/jenkins_data:/jenkins_home
+            - /Users/dreadper/docker_volumes/data/jenkins:/var/jenkins_config
         ports:
             - "8080:8080"
+            - "443:8443"
+            - "50000:50000"
         logging:
-            driver: syslog
-            options:
-                labels: "application"
-                tag: "jenkins|{{.ImageName}}|{{.DaemonName}}"
+            driver: local
+            #driver: syslog
+            # options:
+            #     labels: "application"
+            #     tag: "jenkins|{{.ImageName}}|{{.DaemonName}}"
         labels:
             application: "jenkins-master"
         environment:
             # set java memory pool to 8Gb
-            - JAVA_OPTS="-Xmx8192m"
+            #- JAVA_OPTS="-Xmx8192m"
             # set jenkins connection to 300
             - JENKINS_OPTS=" --handlerCountMax=300
             # set jenkins logfile 
             - logfile=/var/log/jenkins/jenkins.log
+
+
+    registry:
+        image: registry:latest
+        ports:
+        - "5000:5000"
+        environment:
+        REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+        volumes:
+        - ./data:/data
+
+
+volumes:
+    jenkins_data:
+        driver: local
+
+    jenkins:
+        driver: local
